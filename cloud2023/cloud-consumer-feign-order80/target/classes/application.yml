@@ -1,0 +1,21 @@
+#访问一个网站时，默认是80端口，给用户80端口，用户就可以不用加端口直接访问页面
+server:
+  port: 80
+
+eureka:
+  client:
+    register-with-eureka: false #表示向注册中心注册自己 默认为true
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/  #集群版
+
+#设置feign客户端超时时间(OpenFeign默认支持ribbon)
+ribbon:
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+
+logging:
+  level:
+    # feign日志以什么级别监控哪个接口
+    com.kzheng.springcloud.service.PaymentFeignService: debug

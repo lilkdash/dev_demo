@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--Mybatis核心配置中标签顺序必须一致
+    "(properties?,settings?,typeAliases?,typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,
+    plugins?,environments?,databaseIdProvider?,mappers?)".-->
+    <properties resource="jdbc.properties"></properties>
+    <!--类型别名， alias不设置则默认是类名，不区分大小写-->
+    <typeAliases>
+        <typeAlias type="com.kzheng.User" alias="User"></typeAlias>
+    </typeAliases>
+    <!--配置连接数据库的环境-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--引入映射文件-->
+    <mappers>
+        <!--<mapper resource="mappers/UserMapper.xml"/>-->
+        <!--
+            以包为单位引入映射文件
+            要求：
+            1.mapper接口所在的包要和映射文件所在的包一致
+            2.mapper接口要和映射文件的名字一致
+        -->
+        <package name="com.kzheng.mybatis.mapper"></package>
+    </mappers>
+</configuration>

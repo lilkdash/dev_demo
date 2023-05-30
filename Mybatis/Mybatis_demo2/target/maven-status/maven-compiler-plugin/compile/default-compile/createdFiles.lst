@@ -1,0 +1,10 @@
+com\kzheng\mybatis\mapper\SelectMapper.class
+com\kzheng\mybatis\pojo\Dept.class
+com\kzheng\mybatis\mapper\CacheMapper.class
+com\kzheng\mybatis\mapper\DynamicSQLMapper.class
+com\kzheng\mybatis\pojo\Emp.class
+com\kzheng\mybatis\pojo\User.class
+com\kzheng\mybatis\mapper\ParameterMapper.class
+com\kzheng\mybatis\mapper\DeptMapper.class
+com\kzheng\mybatis\utils\SqlsessionUtils.class
+com\kzheng\mybatis\mapper\EmpMapper.class

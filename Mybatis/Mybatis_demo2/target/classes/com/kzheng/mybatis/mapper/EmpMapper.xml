@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kzheng.mybatis.mapper.EmpMapper">
+    <!--List<Emp> getAllEmp();-->
+    <select id="getAllEmpOld" resultType="Emp">
+        select * from t_emp
+    </select>
+    <!--
+        resultMap:自定义映射关系
+        id：设置主键的映射关系
+        result：设置好普通字段映射关系
+        property:type属性设置的实体类的属性名
+        column:sql语句查询出的字段名
+    -->
+    <resultMap id="empResultMap" type="Emp">
+        <id property="eid" column="eid" ></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+    </resultMap>
+    <select id="getAllEmp" resultMap="empResultMap">
+        select * from t_emp
+    </select>
+    <!--List<Emp> getAllEmpAndDept();-->
+    <!--多对一处理方式1：通过级联属性赋值解决-->
+    <resultMap id="empAndDeptResultMap1" type="Emp">
+        <id property="eid" column="eid" ></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <result property="dept.did" column="did"></result>
+        <result property="dept.deptName" column="dept_name"></result>
+    </resultMap>
+    <!--多对一处理方式2：通过association解决-->
+    <resultMap id="empAndDeptResultMap2" type="Emp">
+        <id property="eid" column="eid" ></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <association property="dept" javaType="Dept">
+            <id property="did" column="did"></id>
+            <result property="deptName" column="dept_name"></result>
+        </association>
+    </resultMap>
+    <!--多对一处理方式3：通过分布查询解决-->
+    <resultMap id="empAndDeptResultMap3" type="Emp">
+        <id property="eid" column="eid" ></id>
+        <result property="empName" column="emp_name"></result>
+        <result property="age" column="age"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
+        <!--fetchType:可以单独设置某个查询的延迟加载和立即加载；eage-立即加载，lazy-延迟加载-->
+        <association property="dept" select="com.kzheng.mybatis.mapper.DeptMapper.getEmpAndDeptBySteptTwo" column="did" fetchType="lazy">
+        </association>
+    </resultMap>
+    <select id="getAllEmpAndDept" resultMap="empAndDeptResultMap3">
+        select * from t_emp left join t_dept on t_emp.did=t_dept.did
+    </select>
+</mapper>

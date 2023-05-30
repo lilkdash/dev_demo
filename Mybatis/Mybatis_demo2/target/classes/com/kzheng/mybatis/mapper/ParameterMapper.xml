@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kzheng.mybatis.mapper.ParameterMapper">
+    <!--List<User> getAllUser();-->
+    <select id="getAllUser" resultType="User">
+        select * from t_user
+    </select>
+    <!--
+    参数名可以与入参不一致
+    方式1：select * from t_user where username=#{username}
+    方式2：select * from t_user where username='${username}'
+    -->
+    <!--User getUserByUserName();-->
+    <select id="getUserByUserName" resultType="User">
+       select * from t_user where username='${username}'
+    </select>
+    <!--
+    当参数为多个时，mybatis把所有参数放到map中，以arg0..为键，以参数为值
+    arg0、param1 都是 username;arg1、param2都是password
+    方式1：select * from t_user where username=#{arg0} and password=#{arg1}
+    方式2：select * from t_user where username=#{params0} and password=#{param1}
+    方式3：select * from t_user where username=#{arg0} and password=#{param1}
+    ..select * from t_user where username='${arg0}' and password='${param2}'
+    -->
+    <!--User checkLogin();-->
+    <select id="checkLogin" resultType="User">
+        select * from t_user where username='${arg0}' and password='${param2}'
+    </select>
+    <!--User checkLoginByParam(@Param("username")String username,@Param("password") String password);-->
+    <select id="checkLoginByParam" resultType="User">
+        select * from t_user where username='${username}' and password='${password}'
+    </select>
+    <!--Map<String,Object> getUserByIdToMap(@Param("username")int id);-->
+    <select id="getUserByIdToMap" resultType="Map">
+        select * from t_user where id='${id}'
+    </select>
+    <!--List<User> getAllUserByUserByLike(@Param("username") String username);-->
+    <!--
+    方式1：select * from t_user where username like '%${username}%'
+    方式2：select * from t_user where username like concat('%','${username}','%')
+    方式3：select * from t_user where username like concat('%',#{username},'%')
+    方式4(建议使用)：select * from t_user where username like "%"#{username}"%"
+    -->
+    <select id="getAllUserByUserByLike" resultType="User">
+        select * from t_user where username like "%"#{username}"%"
+    </select>
+    <!--int deleteMore(@Param("ids") String ids);
+    #{}会自动增加单引号(1,2,3)to('1,2,3')-->
+    <delete id="deleteMore">
+        delete from t_user where id in (${ids})
+    </delete>
+    <delete id="deleteMoreByName">
+        delete from t_user where username in (${usernames})
+    </delete>
+    <!--void insertUser(User user);-->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user values(null,#{username},#{password},#{age},#{sex},#{email})
+    </insert>
+</mapper>

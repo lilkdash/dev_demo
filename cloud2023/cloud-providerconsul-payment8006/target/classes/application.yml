@@ -1,0 +1,25 @@
+server:
+  port: 8006
+spring:
+  application:
+    name: consul-provider-payment
+  cloud:
+    consul:
+      host: 192.170.234.133
+      port: 8500
+      discovery:
+        register: true # 是否需要注册
+        instance-id: ${spring.application.name}-01 # 注册实例id(必须唯一)
+        service-name: ${spring.application.name} # 服务名称
+        port: ${server.port} # 服务端口
+        prefer-ip-address: true #是否使用ip地址注册
+        ip-address: ${spring.cloud.client.ip-address} # 服务请求ip
+  #数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #mysql5.x的没有cj
+    driver-class-name: org.gjt.mm.mysql.Driver
+    #记得先创建数据库
+    url: jdbc:mysql://localhost:3306/my_database?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: kaizheng
