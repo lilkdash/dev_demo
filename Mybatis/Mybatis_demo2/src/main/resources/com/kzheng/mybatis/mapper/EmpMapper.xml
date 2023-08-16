@@ -11,7 +11,7 @@
         resultMap:自定义映射关系
         id：设置主键的映射关系
         result：设置好普通字段映射关系
-        property:type属性设置的实体类的属性名
+        property:type属性设置的实体类的属性名getUserByUserName
         column:sql语句查询出的字段名
     -->
     <resultMap id="empResultMap" type="Emp">
@@ -47,7 +47,7 @@
             <result property="deptName" column="dept_name"></result>
         </association>
     </resultMap>
-    <!--多对一处理方式3：通过分布查询解决-->
+    <!--多对一处理方式3：通过分步查询解决-->
     <resultMap id="empAndDeptResultMap3" type="Emp">
         <id property="eid" column="eid" ></id>
         <result property="empName" column="emp_name"></result>

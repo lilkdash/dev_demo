@@ -14,7 +14,7 @@
     <delete id="deleteUser">
         delete from  t_user where id=2
     </delete>
-    <!--查询必须设置resultType或resulMap
+    <!--查询必须设置resultType或resultMap
         resultType:设置，默认的映射关系
         resulMap：设置自定义的映射关系
     -->

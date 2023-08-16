@@ -1,0 +1,51 @@
+spring:
+#  mvc:
+#    static-path-pattern: /res/**
+
+  resources:
+    static-locations: [classpath:/static/]
+  mvc:
+    view:
+      prefix:/suffix: .html
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+      url: jdbc:mysql://localhost:3306/my_database
+      username: root
+      password: kaizheng
+      driver-class-name: com.mysql.jdbc.Driver
+      druid:
+        aop-patterns: com.atguigu.admin.*  #监控SpringBean
+        filters: stat,wall     # 底层开启功能，stat（sql监控），wall（防火墙）
+
+        stat-view-servlet:   # 配置监控页功能
+          enabled: true
+          login-username: admin
+          login-password: admin
+          resetEnable: false
+
+        web-stat-filter:  # 监控web
+          enabled: true
+          urlPattern: /*
+          exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+
+
+        filter:
+          stat:    # 对上面filters里面的stat的详细配置
+            slow-sql-millis: 1000
+            logSlowSql: true
+            enabled: true
+          wall:
+            enabled: true
+            config:
+              drop-table-allow: false
+#  redis:
+#    host: 192.170.234.132
+#    port: 6379
+#    password: kaizheng
+
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名

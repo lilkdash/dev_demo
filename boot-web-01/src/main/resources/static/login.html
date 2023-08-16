@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<script>
+    $(function () {
+        $("#submit").click(function () {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            if(username.trim() == "" || password.trim() == ""){
+                alert("请输入用户名或密码");
+                return;
+            }
+            $.ajax({
+                url: "/user/login",
+                data:{"username":username,"password":password},
+                type:"POST",
+                dataType:"json",
+                success:function (data){
+                    debugger
+                    console.log(data)
+                    if(data.code == 1){
+                        window.location.href="index.html";
+                    }else {
+                        alert("请输入正确的用户名或密码");
+                        $("#username").val("");
+                        $("#password").val("");
+                    }
+                }
+            })
+        });
+    });
+</script>
+<body>
+<!-- 这是导航栏 -->
+
+<div class="login-container">
+    <div class="login-dialog">
+        <h3>登录</h3>
+        <div class="row">
+            <span>用户名</span>
+            <input type="text" id="username" name="username">
+        </div>
+        <div class="row">
+            <span>密码</span>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="row">
+            <!-- <button>提交</button> -->
+            <input type="submit" id="submit" value="登录">
+        </div>
+        <div class="row1">
+            没有账户？<a href="enroll.html">请先注册</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
